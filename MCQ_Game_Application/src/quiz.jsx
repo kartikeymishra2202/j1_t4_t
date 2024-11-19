@@ -1,5 +1,6 @@
 import { useState } from "react";
 import questions from "./Mcq_data/data.js";
+import "./App.css";
 
 function Quiz() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -20,19 +21,39 @@ function Quiz() {
   return (
     <div className="quiz-container">
       {isCompleted ? (
-        <div className="result">
-          <h1>
+        <div className="result-card">
+          <h2>Quiz Completed!</h2>
+          <p>
             Your Score: {score}/{questions.length}
-          </h1>
+          </p>
+          <button
+            className="primary-button"
+            onClick={() => {
+              setScore(0);
+              setCurrentIndex(0);
+              setIsCompleted(false);
+            }}
+          >
+            Restart Quiz
+          </button>
         </div>
       ) : (
-        <div className="question">
-          <h2>{questions[currentIndex].question}</h2>
-          {questions[currentIndex].options.map((option, index) => (
-            <button key={index} onClick={() => handleAnswer(option)}>
-              {option}
-            </button>
-          ))}
+        <div className="question-card">
+          <h3>
+            Question {currentIndex + 1} of {questions.length}
+          </h3>
+          <p className="question">{questions[currentIndex].question}</p>
+          <div className="options">
+            {questions[currentIndex].options.map((option, index) => (
+              <button
+                key={index}
+                className="option-button"
+                onClick={() => handleAnswer(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>
